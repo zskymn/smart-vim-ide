@@ -1,46 +1,184 @@
-set shell=/bin/bash  " for fish shell
+" 指定shell
+set shell=/bin/bash
+" 导入vim默认配置
+source $VIMRUNTIME/vimrc_example.vim
 
-set nocompatible
-set nowrap
-set nobackup
-set noswapfile
-set showcmd
-set foldmethod=marker
-
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set expandtab
-set autoindent
-
+" Vundle插件管理"{{{
 filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
+" 插件管理
 Plugin 'git@github.com:VundleVim/Vundle.vim'
+" 主题
 Plugin 'git@github.com:flazz/vim-colorschemes'
+" 状态栏
 Plugin 'git@github.com:bling/vim-airline'
+" 恢复和撤销操作
 Plugin 'git@github.com:mbbill/undotree.git'
+" 文件目录查看
 Plugin 'git@github.com:scrooloose/nerdtree.git'
-
+" 代码注释设置
+Plugin 'git@github.com:tpope/vim-commentary.git'
+" 代码模板片段
+Plugin 'git@github.com:SirVer/ultisnips.git'
+Plugin 'git@github.com:honza/vim-snippets.git'
+" 代码智能补全
+Plugin 'git@github.com:Valloric/YouCompleteMe.git'
+" js代码分析（有助于js代码补全）
+Plugin 'git@github.com:marijnh/tern_for_vim.git'
+" git diff 显示
+Plugin 'git://github.com/airblade/vim-gitgutter.git'
+" 代码块快速选择
+Plugin 'git@github.com:gcmt/wildfire.vim.git'
+" 光标快速跳转到指定位置
+Plugin 'git@github.com:easymotion/vim-easymotion.git'
+" markdown预览
+Plugin 'git@github.com:shime/vim-livedown.git'
+" 静态语法检查
+Plugin 'git@github.com:scrooloose/syntastic.git'
+" 智能文本替换和命名（驼峰、蛇形）转换
+Plugin 'git@github.com:tpope/vim-abolish.git'
 call vundle#end()
 filetype plugin indent on
+"}}}
 
+" 一般配置"{{{
+
+" 关闭兼容模式
+set nocompatible
+" 禁止折行
+set nowrap
+" 关闭文件备份
+set nobackup
+" 禁止创建备份文件
+set noswapfile
+" 在状态栏显示执行的命令
+set showcmd
+" 文件改变时重新加载
+set autoread
+" 利用标记折叠代码
+set foldmethod=marker
+" 设置leader键
+let g:mapleader=","
+" 开启鼠标支持
+set mouse=a
+" 总是显示状态栏
+set laststatus=2
+" 显示光标当前位置
+set ruler
+" 开启行号显示
+set number
+" 高亮显示当前行
+set cursorline
+" 高亮显示当前列
+set cursorcolumn
+" 高亮显示搜索结果
+set hlsearch
 " 开启语法高亮功能
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
 syntax on
-
-set background=dark
+" 设置主题
 colorscheme molokai
+"}}}
 
+" 快捷键设置"{{{
+
+"定义快捷键到行首和行尾
+nmap lb 0
+nmap le $
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 定义快捷键保存所有窗口内容并退出 vim
+nmap <Leader>WQ :wa<CR>:qa<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+" 依次遍历子窗口
+nnoremap nw <C-W><C-W>
+" 跳转至左方的窗口
+nnoremap <Leader>hw <C-W>h
+" 跳转至右方的窗口
+nnoremap <Leader>lw <C-W>l
+" 跳转至上方的子窗口
+nnoremap <Leader>kw <C-W>k
+" 跳转至下方的子窗口
+nnoremap <Leader>jw <C-W>j
+" 定义快捷键在结对符之间跳转，助记pair
+nmap <Leader>pa %
+map <silent> <F12> :NERDTreeToggle %<CR>
+"}}}
+
+" 缩进设置"{{{
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set expandtab
+set autoindent
+autocmd BufNewFile,BufReadPost *.py setlocal tabstop=4 shiftwidth=4 softtabstop=4
+"}}}
+
+" 状态栏插件airline配置"{{{
 set laststatus=2
 let g:airline_theme='molokai'
 let g:airline_powerline_fonts=1
+"}}}
 
+"撤销插件undo配置"{{{
 set undofile
 set undodir=$HOME/.undo
+"}}}
 
-map <silent> <F12> :NERDTreeToggle %<CR>
+" 文件浏览插件NERDTree配置"{{{
 let g:NERDTreeIgnore=['\.pyc$']
+"}}}
+
+" 模板插件UltiSnips配置"{{{
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsSnippetDirectories=['UltiSnips', 'skUltiSnips']
+"}}}
+
+" 智能补全插件YouCompleteMe配置"{{{
+let g:ycm_min_num_of_chars_for_completion = 1
+set completeopt-=preview
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+
+if has("autocmd") && exists("+omnifunc")
+  if &omnifunc == "" |
+    setlocal omnifunc=syntaxcomplete#Complete |
+  endif
+endif
+
+function! MyTabFunction ()
+  let line = getline('.')
+  let substr = strpart(line, -1, col('.')+1)
+  let substr = matchstr(substr, "[^ \t]*$")
+  if strlen(substr) == 0
+    return "\<tab>"
+  endif
+  return pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
+endfunction
+inoremap <tab> <c-r>=MyTabFunction()<cr>
+"}}}
+
+" 静态语法检查插件syntastic配置"{{{
+let g:syntastic_check_on_open               = 1
+let g:syntastic_python_checkers             = ['pylint', 'flake8', 'pep8', 'pyflakes']
+let g:syntastic_python_pylint_args          = "-disable-msg=C0103 --max-line-length=79 --ignore=E712"
+let g:syntastic_python_pep8_args            = "--max-line-length=79 --ignore=E712"
+let g:syntastic_python_flake8_args          = "--max-line-length=79 --max-complexity=16 --ignore=E712"
+let g:syntastic_always_populate_loc_list    = 1
+let g:syntastic_javascript_checkers         = ['jshint']
+let g:loaded_syntastic_html_tidy_checker    = 0
+"}}}
