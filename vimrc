@@ -27,7 +27,7 @@ Plugin 'git@github.com:Valloric/YouCompleteMe.git'
 " js代码分析（有助于js代码补全）
 Plugin 'git@github.com:marijnh/tern_for_vim.git'
 " git diff 显示
-Plugin 'git://github.com/airblade/vim-gitgutter.git'
+Plugin 'git@github.com/airblade/vim-gitgutter.git'
 " 代码块快速选择
 Plugin 'git@github.com:gcmt/wildfire.vim.git'
 " 光标快速跳转到指定位置
@@ -38,6 +38,10 @@ Plugin 'git@github.com:shime/vim-livedown.git'
 Plugin 'git@github.com:scrooloose/syntastic.git'
 " 智能文本替换和命名（驼峰、蛇形）转换
 Plugin 'git@github.com:tpope/vim-abolish.git'
+" 代码格式化（美化）-- a fork to fix bug
+Plugin 'git@github.com:joshuarubin/vim-autoformat.git'
+" less高亮
+Plugin 'git@github.com:groenewege/vim-less.git'
 call vundle#end()
 filetype plugin indent on
 "}}}
@@ -111,7 +115,14 @@ nnoremap <Leader>kw <C-W>k
 nnoremap <Leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转，助记pair
 nmap <Leader>pa %
+" 开关UnicodeTranslateError
 map <silent> <F12> :NERDTreeToggle %<CR>
+" 格式化（美化）代码
+noremap <silent><Leader>ff :Autoformat<CR>
+" 格式化less
+autocmd FileType less noremap <buffer> <leader>ff ggvG=
+" 开关Undotree
+nnoremap <F5> :UndotreeToggle<cr>
 "}}}
 
 " 缩进设置"{{{
