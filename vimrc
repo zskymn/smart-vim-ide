@@ -42,6 +42,8 @@ Plugin 'git@github.com:tpope/vim-abolish.git'
 Plugin 'git@github.com:joshuarubin/vim-autoformat.git'
 " less高亮
 Plugin 'git@github.com:groenewege/vim-less.git'
+" 显示代码结构
+Plugin 'git@github.com:majutsushi/tagbar.git'
 call vundle#end()
 filetype plugin indent on
 "}}}
@@ -89,20 +91,20 @@ colorscheme molokai
 " 快捷键设置"{{{
 
 "定义快捷键到行首和行尾
-nmap lb 0
-nmap le $
+nnoremap lb 0
+nnoremap le $
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
-nmap <Leader>p "+p
+nnoremap <Leader>p "+p
 " 定义快捷键关闭当前分割窗口
-nmap <Leader>q :q<CR>
+nnoremap <Leader>q :q<CR>
 " 定义快捷键保存当前窗口内容
-nmap <Leader>w :w<CR>
+nnoremap <Leader>w :w<CR>
 " 定义快捷键保存所有窗口内容并退出 vim
-nmap <Leader>WQ :wa<CR>:qa<CR>
+nnoremap <Leader>WQ :wa<CR>:qa<CR>
 " 不做任何保存，直接退出 vim
-nmap <Leader>Q :qa!<CR>
+nnoremap <Leader>Q :qa!<CR>
 " 依次遍历子窗口
 nnoremap nw <C-W><C-W>
 " 跳转至左方的窗口
@@ -114,15 +116,24 @@ nnoremap <Leader>kw <C-W>k
 " 跳转至下方的子窗口
 nnoremap <Leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转，助记pair
-nmap <Leader>pa %
+nnoremap <Leader>pa %
 " 开关UnicodeTranslateError
-map <silent> <F12> :NERDTreeToggle %<CR>
+noremap <silent> <F12> :NERDTreeToggle %<CR>
 " 格式化（美化）代码
 noremap <silent><Leader>ff :Autoformat<CR>
 " 格式化less
 autocmd FileType less noremap <buffer> <leader>ff ggvG=
 " 开关Undotree
 nnoremap <F5> :UndotreeToggle<cr>
+" 跳转到变量声明处
+nnoremap <leader>je :YcmCompleter GoToDeclaration<CR>
+" 跳转到变量定义处
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+autocmd FileType javascript nnoremap <leader>jd :TernDef<CR>
+" 显示变量引用
+autocmd FileType javascript nnoremap <leader>jr :TernRefs<CR>
+" 显示Tagbar
+noremap <F8> :TagbarToggle<CR>
 "}}}
 
 " 缩进设置"{{{
