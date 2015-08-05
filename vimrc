@@ -44,6 +44,8 @@ Plugin 'git@github.com:joshuarubin/vim-autoformat.git'
 Plugin 'git@github.com:groenewege/vim-less.git'
 " 显示代码结构
 Plugin 'git@github.com:majutsushi/tagbar.git'
+" 文件查找、打开插件
+Plugin 'git@github.com:kien/ctrlp.vim.git'
 call vundle#end()
 filetype plugin indent on
 "}}}
