@@ -46,6 +46,8 @@ Plugin 'git@github.com:groenewege/vim-less.git'
 Plugin 'git@github.com:majutsushi/tagbar.git'
 " 文件查找、打开插件
 Plugin 'git@github.com:kien/ctrlp.vim.git'
+" 强大的内容查找插件（基于ack）
+Plugin 'git@github.com:dyng/ctrlsf.vim.git'
 call vundle#end()
 filetype plugin indent on
 "}}}
@@ -136,8 +138,12 @@ nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 autocmd FileType javascript nnoremap <leader>jd :TernDef<CR>
 " 显示变量引用
 autocmd FileType javascript nnoremap <leader>jr :TernRefs<CR>
-" 显示Tagbar
+" Tagbar窗口开光
 noremap <F8> :TagbarToggle<CR>
+" CtrlSF搜索
+nnoremap <leader>cf :CtrlSF<CR>
+" CtrlSF窗口开关
+nnoremap <leader>tf :CtrlSFToggle<CR>
 "}}}
 
 " 缩进设置"{{{
@@ -176,15 +182,11 @@ let g:UltiSnipsSnippetDirectories=['UltiSnips', 'skUltiSnips']
 let g:ycm_min_num_of_chars_for_completion = 1
 set completeopt-=preview
 let g:ycm_complete_in_comments = 1
-let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_complete_in_strings = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_cache_omnifunc = 0
 let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
-
-if has("autocmd") && exists("+omnifunc")
-  if &omnifunc == "" |
-    setlocal omnifunc=syntaxcomplete#Complete |
-  endif
-endif
 
 function! MyTabFunction ()
   let line = getline('.')
@@ -207,4 +209,9 @@ let g:syntastic_python_flake8_args          = "--max-line-length=79 --max-comple
 let g:syntastic_always_populate_loc_list    = 1
 let g:syntastic_javascript_checkers         = ['jshint']
 let g:loaded_syntastic_html_tidy_checker    = 0
+"}}}
+
+" 内容查找插件CtrlSF配置"{{{
+let g:ctrlsf_default_root = 'project'
+let g:ctrlsf_position = 'bottom'
 "}}}
