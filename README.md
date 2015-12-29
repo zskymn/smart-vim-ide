@@ -1,6 +1,5 @@
 # 简介
-* vim-ide-mac收集了vim的一些插件和配置，可以更好地将vim打造为python项目的编辑器（主要使用python、js、html和css）
-* **该配置在mac下测试通过**
+* smart-vim-ide收集了vim的一些插件和配置，可以更好地将vim打造为python项目的编辑器（主要使用python、js、html和css）
 
 # 使用
 ### 克隆项目并获取子模块
